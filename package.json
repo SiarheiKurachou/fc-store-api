@@ -1,0 +1,29 @@
+{
+  "name": "fc-store-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SiarheiKurachou/fc-store-api.git"
+  },
+  "author": "SiarheiKurachou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SiarheiKurachou/fc-store-api/issues"
+  },
+  "homepage": "https://github.com/SiarheiKurachou/fc-store-api#readme",
+  "dependencies": {
+    "axios": "^0.21.4",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "log4js": "^6.3.0",
+    "lru-cache": "^6.0.0",
+    "mongodb": "^4.1.2",
+    "mongoose": "^6.0.7"
+  }
+}
