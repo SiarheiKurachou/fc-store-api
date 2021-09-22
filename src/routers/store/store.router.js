@@ -15,6 +15,15 @@ const genRanHex = (size) =>
     .map(() => Math.floor(Math.random() * 16).toString(16))
     .join("");
 
+const defaultResp = {
+  status: 200,
+  message: "OK",
+  total: 0,
+  totalCached: 0,
+  totalResponse: 0,
+  data: [],
+};
+
 const router = express.Router();
 
 router.get("/get/:key", async (req, res) => {
@@ -34,20 +43,20 @@ router.get("/get/:key", async (req, res) => {
     } else {
       logger.info("Found record. Cache hit");
     }
-    res.json(response);
+    res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
-    res.json({ err: err.message });
+    res.json({ status: 503, err: err.message });
   }
 });
 
 router.get("/get-all", async (req, res) => {
   try {
     const response = await storeController.getAllStoreRecords();
-    res.json(response);
+    res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
-    res.json({ err: err.message });
+    res.json({ status: 503, err: err.message });
   }
 });
 
@@ -80,10 +89,10 @@ router.post("/create", async (req, res) => {
     } else {
       response = await storeController.createStoreRecord(tempItem);
     }
-    res.json(response);
+    res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
-    res.json({ err: err.message });
+    res.json({ status: 503, err: err.message });
   }
 });
 
@@ -108,10 +117,10 @@ router.put("/update/:key", async (req, res) => {
       { key: recordKey },
       tempItem
     );
-    res.json(response);
+    res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
-    res.json({ err: err.message });
+    res.json({ status: 503, err: err.message });
   }
 });
 
@@ -121,20 +130,20 @@ router.delete("/delete/:key", async (req, res) => {
     const response = await storeController.deleteStoreRecord({
       key: recordKey,
     });
-    res.json(response);
+    res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
-    res.json({ err: err.message });
+    res.json({ status: 503, err: err.message });
   }
 });
 
 router.delete("/delete-all", async (req, res) => {
   try {
     const response = await storeController.deleteAllStoreRecords();
-    res.json(response);
+    res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
-    res.json({ err: err.message });
+    res.json({ status: 503, err: err.message });
   }
 });
 
