@@ -46,7 +46,7 @@ router.get("/get/:key", async (req, res) => {
     res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
-    res.json({ err: err.message });
+    res.json({ status: 503, err: err.message });
   }
 });
 
@@ -56,7 +56,7 @@ router.get("/get-all", async (req, res) => {
     res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
-    res.json({ err: err.message });
+    res.json({ status: 503, err: err.message });
   }
 });
 
@@ -92,7 +92,7 @@ router.post("/create", async (req, res) => {
     res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
-    res.json({ err: err.message });
+    res.json({ status: 503, err: err.message });
   }
 });
 
@@ -120,7 +120,7 @@ router.put("/update/:key", async (req, res) => {
     res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
-    res.json({ err: err.message });
+    res.json({ status: 503, err: err.message });
   }
 });
 
@@ -133,7 +133,7 @@ router.delete("/delete/:key", async (req, res) => {
     res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
-    res.json({ err: err.message });
+    res.json({ status: 503, err: err.message });
   }
 });
 
@@ -143,7 +143,7 @@ router.delete("/delete-all", async (req, res) => {
     res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
-    res.json({ err: err.message });
+    res.json({ status: 503, err: err.message });
   }
 });
 
