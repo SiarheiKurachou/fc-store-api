@@ -26,7 +26,17 @@ const defaultResp = {
 
 const router = express.Router();
 
-router.get("/get/:key", async (req, res) => {
+router.get("/all", async (req, res) => {
+  try {
+    const response = await storeController.getAllStoreRecords();
+    res.json({ ...defaultResp, data: response });
+  } catch (err) {
+    logger.error("Error:", err);
+    res.json({ status: 503, err: err.message });
+  }
+});
+
+router.get("/record/:key", async (req, res) => {
   try {
     const recordKey = req.params.key;
     let response = await storeController.getStoreRecord(recordKey);
@@ -50,17 +60,7 @@ router.get("/get/:key", async (req, res) => {
   }
 });
 
-router.get("/get-all", async (req, res) => {
-  try {
-    const response = await storeController.getAllStoreRecords();
-    res.json({ ...defaultResp, data: response });
-  } catch (err) {
-    logger.error("Error:", err);
-    res.json({ status: 503, err: err.message });
-  }
-});
-
-router.post("/create", async (req, res) => {
+router.post("/record", async (req, res) => {
   try {
     const record = req.body ? req.body.record : null;
     let tempItem = {
@@ -96,7 +96,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.put("/update/:key", async (req, res) => {
+router.put("/record/:key", async (req, res) => {
   try {
     const recordKey = req.params.key;
     const record = req.body ? req.body.record : null;
@@ -124,12 +124,9 @@ router.put("/update/:key", async (req, res) => {
   }
 });
 
-router.delete("/delete/:key", async (req, res) => {
+router.delete("/all", async (req, res) => {
   try {
-    const recordKey = req.params.key;
-    const response = await storeController.deleteStoreRecord({
-      key: recordKey,
-    });
+    const response = await storeController.deleteAllStoreRecords();
     res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
@@ -137,9 +134,12 @@ router.delete("/delete/:key", async (req, res) => {
   }
 });
 
-router.delete("/delete-all", async (req, res) => {
+router.delete("/record/:key", async (req, res) => {
   try {
-    const response = await storeController.deleteAllStoreRecords();
+    const recordKey = req.params.key;
+    const response = await storeController.deleteStoreRecord({
+      key: recordKey,
+    });
     res.json({ ...defaultResp, data: response });
   } catch (err) {
     logger.error("Error:", err);
